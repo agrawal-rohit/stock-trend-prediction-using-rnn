@@ -8,7 +8,7 @@ from keras.layers import LSTM
 from keras.layers import Dropout
 
 # Importing dataset
-dataset_train = pd.read_csv('Google_Stock_Price_Train.csv')
+dataset_train = pd.read_csv('data/google-stock-price-train.csv')
 training_set = dataset_train.iloc[:, 1:2].values # upper bound of range is excluded, put in range as we need the data as a numpy array which can be put into the network, else it will be a single vector
 
 # Feature scaling
@@ -24,11 +24,8 @@ for i in range(60,1258): # 60th row to last row
     x_train.append(training_set_scaled[i-60:i,0]) # to 'memorize' last 60 row values to predict the next value
     y_train.append(training_set_scaled[i,0])
 
-x_train,y_train = np.array(x_train), np.array(y_train)
-
-# Reshaping
+x_train,y_train = np.array(x_train), np.array(y_train) 
 x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1)) 
-
 
 # Building the RNN
 regressor = Sequential()
@@ -43,14 +40,12 @@ regressor.add(Dropout(0.2))
 regressor.add(Dense(units = 1))
 regressor.compile(optimizer = 'adam', loss='mean_squared_error')
 regressor.fit(x_train,y_train,epochs = 100, batch_size = 32)
-
-# Making the predictions and visualizing the results
  
 # Ground Truth
-dataset_test = pd.read_csv('Google_Stock_Price_Test.csv')
+dataset_test = pd.read_csv('data/google-stock-price-test.csv')
 real_stock_price = dataset_test.iloc[:, 1:2].values
 
-# Our predictions
+# Model Predictions
 dataset_total = pd.concat((dataset_train['Open'],dataset_test['Open']),axis = 0)
 inputs = dataset_total[len(dataset_total) - len(dataset_test) - 60:].values
 inputs = inputs.reshape(-1,1)
