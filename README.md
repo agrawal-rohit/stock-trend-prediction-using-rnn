@@ -1,14 +1,14 @@
-# Google Stock Price Predictor
+# Google Stock Price Prediction using RNNs
 
 This repository contains a Recurrent Neural Network (RNN) model for predicting Google's stock price. The model is trained on the Google Open Stock Price Dataset and uses Long Short-Term Memory (LSTM) units along with Dropout layers for regularization.
 
 ## Methodology
 
-1. **Data Import:** The training dataset is imported from 'data/google-stock-price-train.csv'. The data is then scaled using MinMaxScaler from sklearn.preprocessing.
+1. **Data Import:** The training dataset is imported from `data/google-stock-price-train.csv`. The data is then scaled using MinMaxScaler from `sklearn.preprocessing`.
 
 2. **Data Structure Creation:** A data structure with 60 timesteps and 1 output is created. This means that to predict the next value, the model 'memorizes' the last 60 values.
 
-3. **RNN Building:** The RNN model is built using Keras. It consists of four LSTM layers with 50 units each and a Dropout of 0.2 after each LSTM layer. The final layer is a Dense layer with 1 unit. The model is compiled with 'adam' optimizer and 'mean_squared_error' loss function.
+3. **RNN Building:** The RNN model is built using Keras. It consists of four LSTM layers with 50 units each and a Dropout of 0.2 after each LSTM layer. The final layer is a Dense layer with 1 unit. The model is compiled with `adam` optimizer and `mean_squared_error` loss function.
 
 4. **Model Training:** The model is trained with 100 epochs and a batch size of 32.
 
